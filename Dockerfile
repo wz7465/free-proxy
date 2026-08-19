@@ -29,7 +29,6 @@ RUN go mod download
 
 COPY . .
 
-
 RUN CGO_ENABLED=0 \
     go build \
     -trimpath \
@@ -62,10 +61,8 @@ COPY --from=go-builder /free-proxy /usr/local/bin/free-proxy
 
 COPY entrypoint.sh /entrypoint.sh
 
-RUN chmod +x /usr/local/bin/free-proxy \
-    /entrypoint.sh
-
-RUN mkdir -p /var/lib/free-proxy
+RUN chmod +x /usr/local/bin/free-proxy /entrypoint.sh && \
+    mkdir -p /var/lib/free-proxy
 
 VOLUME ["/var/lib/free-proxy"]
 
