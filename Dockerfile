@@ -29,10 +29,6 @@ RUN go mod download
 
 COPY . .
 
-# 使用前端构建结果
-COPY --from=frontend-builder \
-    /src/frontend/dist \
-    /src/internal/web/dist
 
 RUN CGO_ENABLED=0 \
     go build \
