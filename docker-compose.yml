@@ -1,0 +1,27 @@
+services:
+
+  free-proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: free-proxy
+
+    restart: unless-stopped
+
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+
+    devices:
+      - /dev/net/tun:/dev/net/tun
+
+    ports:
+      # 公网代理
+      - "0.0.0.0:9527:9527"
+
+      # Web 管理后台暂时只允许 VPS 本机访问
+      - "0.0.0.0:39527:39527"
+
+    volumes:
+      - ./data:/var/lib/free-proxy
