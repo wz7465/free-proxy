@@ -5,13 +5,13 @@ FROM oven/bun:1 AS frontend-builder
 
 WORKDIR /src
 
-COPY source/frontend/package.json source/frontend/bun.lock* ./frontend/
+COPY frontend/package.json frontend/bun.lock* ./frontend/
 
 WORKDIR /src/frontend
 
 RUN bun install
 
-COPY source/frontend/ ./
+COPY frontend/ ./
 
 RUN bun run build
 
@@ -23,11 +23,11 @@ FROM golang:1.26-bookworm AS go-builder
 
 WORKDIR /src
 
-COPY source/go.mod source/go.sum ./
+COPY go.mod go.sum ./
 
 RUN go mod download
 
-COPY source/ ./
+COPY . .
 
 # 使用前端构建结果
 COPY --from=frontend-builder \
